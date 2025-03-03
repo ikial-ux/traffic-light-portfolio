@@ -6,6 +6,7 @@ function App() {
   return (
     <div className="full-screen-center">
         <TrafficLight />  {/* Include the TrafficLight component here */}
+        <Analytics /> {/* Agrega el componente de Analytics de Vercel */}
     </div>
   );
 }
