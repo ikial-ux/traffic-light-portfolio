@@ -1,0 +1,90 @@
+/* Container for the whole traffic light */
+.traffic-light {
+    width: 100px;
+    height: 500px;  /* Aumentado para hacerlo más largo */
+    border-radius: 15px;
+    background: linear-gradient(145deg, #333, #444); /* Gradient for a more realistic 3D effect */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+    transform: rotateX(20deg) rotateY(25deg); /* Adjust these to change the perspective */
+    transform-style: preserve-3d;
+    perspective: 1500px; /* Perspective to create depth */
+    background-color: #222; /* Background color to give depth */
+    position: relative; /* Make sure the traffic light body can overlap the pole */
+  }
+  
+  /* Add a pole (the "stand" part of the traffic light) */
+  .traffic-light::after {
+    content: "";
+    position: absolute;
+    bottom: -150px; /* Aumentado para que el palo sea más largo */
+    width: 20px; /* Thickness of the pole */
+    height: 250px; /* Aumentado para hacerlo más largo */
+    background-color: #555; /* Dark grey to simulate a metal pole */
+    border-radius: 10px; /* Slight roundness for a more realistic look */
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3); /* Add a shadow for depth */
+  }
+  
+  /* Glowing effect when hovered */
+  .traffic-light:hover {
+    transform: translateY(-5px) rotateX(0deg) rotateY(0deg); /* Slight lift effect */
+  }
+  
+  /* Individual light styles */
+  .light {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 10px 0;
+    background-color: #555; /* Default color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Light shadow to add depth */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    z-index: 2; /* Ensures the light is above the container */
+  }
+  
+  /* Red, yellow, and green light colors */
+  .light.red {
+    background-color: #ff4d4d; /* Red color */
+  }
+  
+  .light.yellow {
+    background-color: #f7e74b; /* Yellow color */
+  }
+  
+  .light.green {
+    background-color: #4dff58; /* Green color */
+  }
+  
+  /* Shadow effect on hover for each individual light */
+  .light:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  
+  .light.red:hover {
+    background-color: #ff1a1a; /* Darker red when hovered */
+  }
+  
+  .light.yellow:hover {
+    background-color: #f1c40f; /* Darker yellow when hovered */
+  }
+  
+  .light.green:hover {
+    background-color: #2ecc71; /* Darker green when hovered */
+  }
+  
+  /* Adding icons to the lights */
+  .light i {
+    font-size: 2em;
+    color: #fff;
+    position: absolute;
+    z-index: 1;
+  }
+  
