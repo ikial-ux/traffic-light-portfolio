@@ -26,7 +26,7 @@ function TrafficLight() {
           <i className="fab fa-github"></i> {/* GitHub icon */}
         </a>
         <a 
-          href="/path-to-your-cv.pdf"  // Replace with your actual CV link
+          href="/public/CV_KIAL_ILYAS-1.pdf"  // Replace with your actual CV link
           target="_blank" 
           rel="noopener noreferrer"
           className="light green"
