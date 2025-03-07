@@ -8,7 +8,7 @@ Feel free to explore the project, try out the features, and see how the traffic 
 
 ### 🔧 Installation
 1. Clone the repository:
-   git clone https://github.com/ikial-ux/my-traffic-light.git
+   git clone https://github.com/ikial-ux/traffic-light-portfolio.git
 
 2. Navigate to the project folder:
    cd my-traffic-light
