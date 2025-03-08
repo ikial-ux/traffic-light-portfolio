@@ -1,5 +1,18 @@
-/* Container for the whole traffic light */
+/* Default (Day Mode) */
+body.day {
+  background-color: #f5f5dc; /* Beige background color */
+  color: #333; /* Dark text for readability */
+  transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transition */
+}
 
+
+body.night {
+  background-color: #222; /* Dark gray instead of pure black */
+  color: #eaeaea; /* Light gray text to reduce contrast */
+  transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transition */
+}
+
+/* Container for the whole traffic light */
 .traffic-light {
   width: 170px;
   height: 400px;
@@ -18,34 +31,33 @@
 
 .traffic-light::before {
   content: "";
-  width: 180px;  /* Adjust width to make it look like a wider "hat" */
-  height: 40px;  /* Height adjusted to make it flatter */
+  width: 180px;
+  height: 40px;
   background: #222;
   background-image: radial-gradient(#444, #000);
   position: absolute;
-  top: -45px;  /* Move it upwards above the traffic light */
-  left: 5px;  /* Adjust horizontally to center or align better */
-  right: -70px;  /* Adjust if needed for more control */
-  border-radius: 50% 50% 0 0;  /* Create the "hat" effect with rounded top */
-  margin-left: 0px;
+  top: -44px;
+  left: 5px;
+  right: -70px;
+  border-radius: 50% 50% 0 0;
 }
 
 .traffic-light::after {
   background: #222;
-  background-image: linear-gradient(-0deg, #777 10%, #ccc 30%, #000);
+  background-image: linear-gradient(to bottom, #111 20%, #1a1a1a 50%, #222 80%);
   content: "";
   width: 50px;
-  height: 500px;
+  height: 150px;
   position: absolute;
   top: 425px;
   left: 70px;
 }
 
-
+/* Protectors */
 .protector {
   background: transparent;
   width: 180px;
-  height: 90px; /* Set a non-zero height */
+  height: 90px;
   position: absolute;
   top: 20px;
   left: -px;
@@ -64,6 +76,7 @@
   top: 260px;
 }
 
+/* Light styles */
 .light {
   width: 100px;
   height: 100px;
@@ -74,52 +87,94 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.3s ease;
+}
+
+.light.glow {
+  box-shadow: 0 0 25px 5px rgba(255, 255, 255, 0.8);
 }
 
 .light i {
-  font-size: 40px; /* Adjust as needed */
+  font-size: 40px;
   color: white;
 }
 
-
+/* Color states */
 .red {
   background: red;
   background-image: radial-gradient(brown, transparent);
   background-size: 5px 5px;
-  animation: 10s red infinite;
   box-shadow: 0 0 20px #111 inset, 0 0 10px red;
+  animation: red 30s infinite ease-in-out;
 }
 
 .yellow {
   background: yellow;
   background-image: radial-gradient(orange, transparent);
   background-size: 5px 5px;
-  animation: 10s yellow infinite;
   box-shadow: 0 0 20px #111 inset, 0 0 10px yellow;
+  animation: yellow 30s infinite ease-in-out;
 }
 
 .green {
   background: green;
   background-image: radial-gradient(lime, transparent);
   background-size: 5px 5px;
-  animation: 10s green infinite;
   box-shadow: 0 0 20px #111 inset, 0 0 10px lime;
+  animation: green 30s infinite ease-in-out;
 }
 
+/* Keyframe Animations */
 @keyframes red {
-  0%, 50% { opacity: 1; }
-  60%, 100% { opacity: .1; }
+  0%, 33.33% { opacity: 1; }
+  34%, 100% { opacity: .1; }
 }
 
 @keyframes yellow {
-  0%, 50% { opacity: .1; }
-  55%, 65% { opacity: 1; }
-  70%, 100% { opacity: .1; }
+  0%, 33.33% { opacity: .1; }
+  33.34%, 66.66% { opacity: 1; }
+  66.67%, 100% { opacity: .1; }
 }
 
 @keyframes green {
-  0%, 65% { opacity: .1; }
-  70%, 90% { opacity: 1; }
-  95%, 100% { opacity: .1; }
+  0%, 66.66% { opacity: .1; }
+  66.67%, 100% { opacity: 1; }
+}
+
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.light.flashing {
+  animation: flash 0.5s infinite;
+}
+
+.light {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.light.active {
+  opacity: 1;
+}
+
+.light.red {
+  background-color: red;
+}
+
+.light.yellow {
+  background-color: yellow;
+}
+
+.light.green {
+  background-color: green;
 }
 
