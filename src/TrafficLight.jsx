@@ -1,54 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './TrafficLight.css';
 
 function TrafficLight() {
   const [activeLight, setActiveLight] = useState('red');
-  const [mode, setMode] = useState('night'); // 'day' or 'night'
-  const [isFlashing, setIsFlashing] = useState(false); // Track flashing state
-
+  const [mode, setMode] = useState('night'); 
+  const [isSilent, setIsSilent] = useState(false); 
+  const intervalRef = useRef(null);
 
   const toggleMode = () => {
     const newMode = mode === 'day' ? 'night' : 'day';
     setMode(newMode);
     document.body.classList.remove('day', 'night');
-    document.body.classList.add(newMode); // Add the new mode to the body class
+    document.body.classList.add(newMode);
   };
 
-  const beepSound = new Audio('/beep.wav');
-
-  const playBeep = () => {
-    beepSound.play();
+  const toggleSilence = () => {
+    setIsSilent(!isSilent);
   };
 
-  // Function to cycle through the lights
-  useEffect(() => {
-    const cycleLights = setInterval(() => {
-      if (activeLight === 'red') {
-        setActiveLight('yellow');
-        playBeep(); // Play beep sound when changing
-      }
-      else if (activeLight === 'yellow') {
-        setActiveLight('green');
-        playBeep(); // Play beep sound when changing
-      }
-      else {
-        setActiveLight('red');
-        playBeep(); // Play beep sound when changing
-      }
-    }, 10000);  
-
-   if (activeLight === 'green') {
-      setIsFlashing(true); // Start flashing when green
-      const flashTimeout = setTimeout(() => {
-        setIsFlashing(false); // Stop flashing after 500ms
-      }, 500); // Flash duration of 500ms
-
-      return () => clearTimeout(flashTimeout);
+  const playBeep = useCallback(() => {
+    if (!isSilent) {
+      const beepSound = new Audio('/beep.wav');
+      beepSound.play();
     }
+  }, [isSilent]);
 
-    return () => clearInterval(cycleLights);  
-    
-  }, [activeLight]);
+  useEffect(() => {
+    clearInterval(intervalRef.current);
+  
+    intervalRef.current = setInterval(() => {
+      playBeep(); // Ensure beep plays only once per interval
+  
+      setActiveLight((prevLight) => {
+        if (prevLight === 'red') return 'yellow';
+        if (prevLight === 'yellow') return 'green';
+        return 'red';
+      });
+    }, 10000);
+  
+    return () => clearInterval(intervalRef.current);
+  }, [playBeep]);
+  
 
   return (
     <div>
@@ -56,13 +48,14 @@ function TrafficLight() {
         <div className="protector"></div>
         <div className="protector"></div>
         <div className="protector"></div>
-        
+
         <a
           href="https://www.linkedin.com/in/ilyas-kial-developer"
           target="_blank"
           rel="noopener noreferrer"
           className={`light red ${activeLight === 'red' ? 'active' : ''}`}
           aria-label="LinkedIn Profile"
+          title='My Linkedin profile'
         >
           <i className="fab fa-linkedin-in"></i>
         </a>
@@ -73,6 +66,7 @@ function TrafficLight() {
           rel="noopener noreferrer"
           className={`light yellow ${activeLight === 'yellow' ? 'active' : ''}`}
           aria-label="GitHub Profile"
+          title='My GitHub profile'
         >
           <i className="fab fa-github"></i>
         </a>
@@ -83,10 +77,17 @@ function TrafficLight() {
           rel="noopener noreferrer"
           className={`light green ${activeLight === 'green' ? 'active' : ''}`}
           aria-label="Download CV"
+          title='My CV'
         >
           <i className="fas fa-file-alt"></i>
         </a>
       </div>
+
+      <button onClick={toggleSilence} className="toggle-silence-btn">
+        <i className={isSilent ? "fas fa-volume-mute" : "fas fa-volume-up"}></i>
+        {isSilent ? " Unmute" : " Mute"}
+      </button>
+
       <button onClick={toggleMode} className="toggle-mode-btn">
         <i className={mode === 'day' ? 'fas fa-sun' : 'fas fa-moon'}></i>
       </button>
